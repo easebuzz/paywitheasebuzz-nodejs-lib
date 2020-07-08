@@ -1,0 +1,21 @@
+<html>
+<script
+src="https://ebz-static.s3.ap-south-1.amazonaws.com/easecheckout/easebuzz-checkout.js"></script>
+<script>
+    
+    window.addEventListener( 'load',function(e){
+        var key="<%= key %>";
+        var access_key="<%= access_key %>";
+        var easebuzzCheckout = new EasebuzzCheckout(key, "prod")
+        var options = {
+        access_key: access_key, // access key received via Initiate Payment
+        onResponse: (response) => {
+            document.getElementById('response').innerText=JSON.stringify(response);
+        },
+        theme: "#123456" // color hex
+        }
+        easebuzzCheckout.initiatePayment(options);
+})
+</script>
+<p id= 'response'></p>
+</html>

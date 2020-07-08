@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <!--CSS file for date picker -->
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+        <!-- Css file for html -->
+        <link rel="stylesheet" href="/static/css/style.css">
+        <title>Transaction Date API</title>
+    </head>
+    <body>
+        <div class="grid-container">
+            <header class="wrapper">
+                <div class="logo">
+                    <a href="../index.html">
+                        <img src="/static/images/eb-logo.svg" alt="Easebuzz">
+                    </a>
+                </div>
+
+                <div class="hedding">
+                    <h2><a class="highlight" href="../index.html">Back</a></h2>
+                </div>
+            </header>
+        </div>
+        
+        <div class="form-container">
+            <h2>TRANSACTION DATE API</h2>
+            <hr>
+            <form method="POST" action="/transaction_date">
+                <div class="main-form">
+                    <h3>Mandatory Parameters</h3>
+                    <hr>
+                    <div class="mandatory-data">
+                        <div class="form-field">
+                            <label for="merchant_email">Merchant Email ID<sup>*</sup></label>
+                            <input id="merchant_email" class="merchant_email" name="merchant_email" value=""
+                            placeholder="date.transaction@easebuzz.in">
+                        </div>
+        
+                        <div class="form-field">
+                            <label for="transaction_date">Transaction Date<sup>*</sup></label>
+                            <input id="transaction_date" class="transaction_date" name="transaction_date" value="" placeholder="DD-MM-YYYY">
+                        </div>         
+                        
+                        <!--<input type="hidden" name="api_name" value="transaction_date_api"> -->
+                    </div>
+                    
+                    <div class="btn-submit">
+                        <button type="submit">Submit</button>  
+                    </div> 
+                </div>           
+            </form>
+        </div>
+
+        <!-- import javascript file -->  
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+        <script src="/static/js/custom_javascript.js"></script>
+    </body>
+</html>
