@@ -1,64 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" href="/static/css/style.css">
-        <title>Transaction API</title>
-    </head>
-    <body>
-        <div class="grid-container">
-            <header class="wrapper">
-                <div class="logo">
-                    <a href="../index.html">
-                        <img src="/static/images/eb-logo.svg" alt="Easebuzz">
-                    </a>
-                </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transaction V2 - Easebuzz</title>
+  <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <a href="/public/index.html"><img src="/public/images/Easebuzz_Logo_ White_Text.svg" alt="Easebuzz"></a>
+    </div>
+    <div class="nav-right">
+      <div class="toggle-container">
+        <span>Auto Fill Data</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="autoFillToggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <a href="/public/index.html">Back</a>
+    </div>
+  </div>
 
-                <div class="hedding">
-                    <h2><a class="highlight" href="../index.html">Back</a></h2>
-                </div>
-            </header>
+  <div class="main-form">
+    <h2><a href="https://docs.easebuzz.in/" target="_blank">Transaction Status API ↗</a></h2>
+
+    <form action="/easebuzz?api_name=transaction" method="POST">
+      <h3>Mandatory Parameters</h3>
+      <div class="mandatory-data">
+        <div class="form-field">
+          <label>Transaction ID<sup>*</sup></label>
+          <input type="text" name="txnid" placeholder="2024-32" required pattern="^[a-zA-Z0-9_|/\-]{1,40}$" title="Only alphanumeric, _, |, -, / allowed. Max 40 chars.">
         </div>
+      </div>
 
-        <div class="form-container">
-            <h2>TRANSACTION API</h2>
-            <hr>
-            <form method="POST" action="/transaction">
-                <div class="main-form">
-                    <h3>Mandatory Parameters</h3>
-                    <hr>
-                    <div class="mandatory-data">
-                        <div class="form-field">
-                            <label for="txnid">Merchant Transaction ID<sup>*</sup></label>
-                            <input id="txnid" class="txnid" name="txnid" value="" placeholder="ASD12345">
-                        </div>
-        
-                        <div class="form-field">
-                            <label for="amount">Transaction Amount<sup>(should be float)*</sup></label>
-                            <input id="amount" class="amount" name="amount" value="" placeholder="125.25">
-                        </div>
-        
-                        <div class="form-field">
-                            <label for="email">Customer Email ID<sup>*</sup></label>
-                            <input id="email" class="email" name="email" value="" placeholder="trasaction@easebuzz.in">
-                        </div>
-        
-                        <div class="form-field">
-                            <label for="phone">Customer Phone Number<sup>*</sup></label>
-                            <input id="phone" class="phone" name="phone" value="" placeholder="0123456789">
-                        </div>
-        
-                        <!--<input type="hidden" name="api_name" value="transaction"> -->                     
-                    </div>
-                    
-                    <div class="btn-submit">
-                        <button type="submit">Submit</button>  
-                    </div> 
-                </div>
-            </form>
+      <button type="submit" class="submit-btn">Get Transaction</button>
+    </form>
+  </div>
 
-        </div>
-    </body>
+  <script src="/public/js/form-validation.js"></script>
+  <script>
+    document.getElementById('autoFillToggle').addEventListener('change', function() {
+      const form = document.querySelector('form');
+      if (this.checked) {
+        form.txnid.value = '2024-32';
+      } else {
+        form.reset();
+      }
+    });
+  </script>
+</body>
 </html>

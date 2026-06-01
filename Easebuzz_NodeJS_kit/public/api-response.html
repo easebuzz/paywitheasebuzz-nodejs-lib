@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Response - Easebuzz</title>
+  <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+  <div class="response-container">
+    <a href="/public/index.html" class="back-link">← Back</a>
+    <h2>API Response</h2>
+    <div id="response-block">
+      <p>Loading response...</p>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      var token = params.get('token');
+
+      if (!token) {
+        showError('No response token found.');
+        return;
+      }
+
+      fetch('/response-data?token=' + encodeURIComponent(token))
+        .then(function(res) { return res.json(); })
+        .then(function(data) { renderResponse(data); })
+        .catch(function() { showError('Failed to load response data.'); });
+
+      function renderResponse(data) {
+        var isSuccess = data && (data.status === 1 || data.status === true || data.status === '1');
+        var blockClass = isSuccess ? 'success-block' : 'failure-block';
+        var heading = isSuccess ? 'Success' : 'Error';
+        var displayJson = escapeHtml(JSON.stringify(data, null, 2));
+
+        document.getElementById('response-block').innerHTML =
+          '<div class="' + blockClass + '"><h3>' + heading + '</h3><pre class="json-display">' + displayJson + '</pre></div>';
+      }
+
+      function showError(msg) {
+        document.getElementById('response-block').innerHTML =
+          '<div class="failure-block"><h3>Error</h3><pre class="json-display">' + escapeHtml(msg) + '</pre></div>';
+      }
+
+      function escapeHtml(str) {
+        var div = document.createElement('div');
+        div.appendChild(document.createTextNode(String(str)));
+        return div.innerHTML;
+      }
+    })();
+  </script>
+</body>
+</html>

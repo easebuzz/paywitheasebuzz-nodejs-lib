@@ -1,70 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" href="/static/css/style.css">
-        <title>Refund API</title>
-    </head>
-    <body>
-        <div class="grid-container">
-            <header class="wrapper">
-                <div class="logo">
-                    <a href="../index.html">
-                        <img src="/static/images/eb-logo.svg" alt="Easebuzz">
-                    </a>
-                </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refund V2 - Easebuzz</title>
+  <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <a href="/public/index.html"><img src="/public/images/Easebuzz_Logo_ White_Text.svg" alt="Easebuzz"></a>
+    </div>
+    <div class="nav-right">
+      <div class="toggle-container">
+        <span>Auto Fill Data</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="autoFillToggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <a href="/public/index.html">Back</a>
+    </div>
+  </div>
 
-                <div class="hedding">
-                    <h2><a class="highlight" href="../index.html">Back</a></h2>
-                </div>
-            </header>
+  <div class="main-form">
+    <h2><a href="https://docs.easebuzz.in/docs/payment-gateway/c2ac48618b3bd-refund-api-v2" target="_blank">Refund API ↗</a></h2>
 
-            <div class="form-container">
-                <h2>REFUND API</h2>
-                <hr>
-                <form method="POST" action="/refund">
-                    <div class="main-form">
-                        <h3>Mandatory Parameters</h3>
-                        <hr>
-                        <div class="mandatory-data">
-
-                            <div class="form-field">
-                                <label for="txnid">Easebuzz Transaction ID<sup>*</sup></label>
-                                <input id="txnid" class="txnid" name="txnid" value="" placeholder="SBD12345">
-                            </div>
-            
-                            <div class="form-field">
-                                <label for="refund_amount">Refund Amount<sup>(should be float)*</sup></label>
-                                <input id="refund_amount" class="refund_amount" name="refund_amount" value="" placeholder="125.25">
-                            </div>
-            
-                            <div class="form-field">
-                                <label for="phone">Customer Phone Number<sup>*</sup></label>
-                                <input id="phone" class="phone" name="phone" value="" placeholder="0123456789">
-                            </div>
-
-                            <div class="form-field">
-                                <label for="email">Customer Email ID<sup>*</sup></label>
-                                <input id="email" class="email" name="merchant_email" value="" placeholder="refund@easebuzz.in">
-                            </div>
-            
-                            <div class="form-field">
-                                <label for="amount">Customer's Paid Amount<sup>(should be float)*</sup></label>
-                                <input id="amount" class="amount" name="amount" value="" placeholder="125.25">
-                            </div>
-                        </div>
-
-                        <!--<input type="hidden" name="api_name" value="refund"> -->
-                        <div class="btn-submit">
-                            <button type="submit">SUBMIT</button>
-                        </div>
-
-                    </div>
-                </form>
-            </div>
-
+    <form action="/easebuzz?api_name=refund" method="POST">
+      <h3>Mandatory Parameters</h3>
+      <div class="mandatory-data">
+        <div class="form-field">
+          <label>Easebuzz ID<sup>*</sup></label>
+          <input type="text" name="easebuzz_id" placeholder="S260509075FD2X" required>
         </div>
-    </body>
+        <div class="form-field">
+          <label>Refund Amount<sup>*</sup></label>
+          <input type="text" name="refund_amount" placeholder="100.0" required>
+        </div>
+        <div class="form-field">
+          <label>Merchant Refund ID<sup>*</sup></label>
+          <input type="text" name="merchant_refund_id" placeholder="REF123456" required>
+        </div>
+      </div>
+
+      <h3>Optional Parameters</h3>
+      <h4>UDF (User Defined Fields)</h4>
+      <div class="optional-data">
+        <div class="form-field"><label>UDF1</label><input type="text" name="udf1" placeholder="User description1"></div>
+        <div class="form-field"><label>UDF2</label><input type="text" name="udf2" placeholder="User description2"></div>
+        <div class="form-field"><label>UDF3</label><input type="text" name="udf3" placeholder="User description3"></div>
+        <div class="form-field"><label>UDF4</label><input type="text" name="udf4" placeholder="User description4"></div>
+        <div class="form-field"><label>UDF5</label><input type="text" name="udf5" placeholder="User description5"></div>
+        <div class="form-field"><label>UDF6</label><input type="text" name="udf6" placeholder="User description6"></div>
+        <div class="form-field"><label>UDF7</label><input type="text" name="udf7" placeholder="User description7"></div>
+      </div>
+
+      <h4>General</h4>
+      <div class="optional-data">
+        <div class="form-field">
+          <label>Split Payments</label>
+          <input type="text" name="split_payments" placeholder='{"label_of_bank1": 60, "label_of_bank2": 40}'>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">Initiate Refund</button>
+    </form>
+  </div>
+
+  <script src="/public/js/form-validation.js"></script>
+  <script>
+    document.getElementById('autoFillToggle').addEventListener('change', function() {
+      const form = document.querySelector('form');
+      if (this.checked) {
+        form.easebuzz_id.value = 'S260509075FD2X';
+        form.refund_amount.value = '100.0';
+        form.merchant_refund_id.value = 'REF' + Date.now().toString(36).toUpperCase();
+      } else {
+        form.reset();
+      }
+    });
+  </script>
+</body>
 </html>

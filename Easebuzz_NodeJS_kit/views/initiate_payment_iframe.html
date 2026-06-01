@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Initiate Payment (iFrame) - Easebuzz</title>
+  <link rel="stylesheet" href="/public/css/style.css">
+  <script src="https://ebz-static.s3.ap-south-1.amazonaws.com/easecheckout/v2.0.0/easebuzz-checkout-v2.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <a href="/public/index.html"><img src="/public/images/Easebuzz_Logo_ White_Text.svg" alt="Easebuzz"></a>
+    </div>
+    <div class="nav-right">
+      <div class="toggle-container">
+        <span>Auto Fill Data</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="autoFillToggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <a href="/public/index.html">Back</a>
+    </div>
+  </div>
+
+  <div class="main-form">
+    <h2><a href="https://docs.easebuzz.in/docs/payment-gateway/8ec545c331e6f-initiate-payment-api" target="_blank">Initiate Payment (IFrame) API ↗</a></h2>
+
+    <!-- Result display area -->
+    <div id="loading1"></div>
+
+    <form id="iframePaymentForm">
+      <h3>Mandatory Parameters</h3>
+      <div class="mandatory-data">
+        <div class="form-field">
+          <label>Transaction ID<sup>*</sup></label>
+          <input type="text" name="txnid" placeholder="T31Q6JT8HB" required pattern="^[a-zA-Z0-9_|/\-]{1,40}$" title="Only alphanumeric, _, |, -, / allowed. Max 40 chars.">
+        </div>
+        <div class="form-field">
+          <label>Amount (should be float)<sup>*</sup></label>
+          <input type="text" name="amount" placeholder="125.25" required>
+        </div>
+        <div class="form-field">
+          <label>First Name<sup>*</sup></label>
+          <input type="text" name="firstname" placeholder="Easebuzz Pvt. Ltd." required pattern="^[a-zA-Z0-9&amp;'._() /,@-]{1,150}$" title="Only alphanumeric and &'-._()/,@ allowed. Max 150 chars.">
+        </div>
+        <div class="form-field">
+          <label>Email ID<sup>*</sup></label>
+          <input type="email" name="email" placeholder="initiate.payment@easebuzz.in" required title="Enter a valid email address.">
+        </div>
+        <div class="form-field">
+          <label>Phone<sup>*</sup></label>
+          <input type="text" name="phone" placeholder="0123456789" required pattern="^(\+\d{1,4}-?)?\d{5,20}$" title="Valid phone number. 5-20 digits, optional country code.">
+        </div>
+        <div class="form-field">
+          <label>Product Information<sup>*</sup></label>
+          <input type="text" name="productinfo" placeholder="Apple Laptop" required pattern="^[a-zA-Z0-9\s|_-]{1,45}$" title="Only alphanumeric, spaces, - and | allowed. Max 45 chars.">
+        </div>
+        <div class="form-field">
+          <label>Success URL<sup>*</sup></label>
+          <input type="text" name="surl" placeholder="http://localhost:3000/response" required pattern="^https?://.*" title="Enter a valid URL starting with http:// or https://">
+        </div>
+        <div class="form-field">
+          <label>Failure URL<sup>*</sup></label>
+          <input type="text" name="furl" placeholder="http://localhost:3000/response" required pattern="^https?://.*" title="Enter a valid URL starting with http:// or https://">
+        </div>
+      </div>
+
+      <h3>Optional Parameters</h3>
+      <h4>Address Details</h4>
+      <div class="optional-data">
+        <div class="form-field"><label>Address 1</label><input type="text" name="address1" placeholder="#250, Main 5th cross,"></div>
+        <div class="form-field"><label>Address 2</label><input type="text" name="address2" placeholder="Saket nagar, Pune"></div>
+        <div class="form-field"><label>City</label><input type="text" name="city" placeholder="Pune"></div>
+        <div class="form-field"><label>State</label><input type="text" name="state" placeholder="Maharashtra"></div>
+        <div class="form-field"><label>Country</label><input type="text" name="country" placeholder="India"></div>
+        <div class="form-field"><label>Zip-Code</label><input type="text" name="zipcode" placeholder="123456" pattern="^[0-9]{0,6}$"></div>
+      </div>
+
+      <h4>UDF (User Defined Fields)</h4>
+      <div class="optional-data">
+        <div class="form-field"><label>UDF1</label><input type="text" name="udf1" placeholder="User description1"></div>
+        <div class="form-field"><label>UDF2</label><input type="text" name="udf2" placeholder="User description2"></div>
+        <div class="form-field"><label>UDF3</label><input type="text" name="udf3" placeholder="User description3"></div>
+        <div class="form-field"><label>UDF4</label><input type="text" name="udf4" placeholder="User description4"></div>
+        <div class="form-field"><label>UDF5</label><input type="text" name="udf5" placeholder="User description5"></div>
+        <div class="form-field"><label>UDF6</label><input type="text" name="udf6" placeholder="User description6"></div>
+        <div class="form-field"><label>UDF7</label><input type="text" name="udf7" placeholder="User description7"></div>
+      </div>
+
+      <h4>General</h4>
+      <div class="optional-data">
+        <div class="form-field">
+          <label>Sub-Merchant ID</label>
+          <input type="text" name="sub_merchant_id" placeholder="S123ABC" pattern="^[a-zA-Z0-9\-]{0,15}$">
+        </div>
+        <div class="form-field">
+          <label>Unique ID</label>
+          <input type="text" name="unique_id" placeholder="Customer unique Id" pattern="^[a-zA-Z0-9_]{0,40}$">
+        </div>
+        <div class="form-field">
+          <label>Show Payment Mode</label>
+          <input type="text" name="show_payment_mode" placeholder="NB,DC,CC,MW,UPI,OM,EMI,CBT,BT">
+        </div>
+        <div class="form-field">
+          <label>Split Payments</label>
+          <input type="text" name="split_payments" placeholder='{"label_of_bank1": 60, "label_of_bank2": 40}'>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">Pay Now (iFrame)</button>
+    </form>
+  </div>
+
+  <script src="/public/js/form-validation.js"></script>
+  <script>
+    // Reset auto-fill toggle on page load
+    document.getElementById('autoFillToggle').checked = false;
+
+    // iFrame payment - AJAX submit + Easebuzz Checkout SDK
+    document.getElementById('iframePaymentForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      if (!this.checkValidity()) {
+        this.reportValidity();
+        return;
+      }
+
+      $.ajax({
+        type: 'POST',
+        url: '/easebuzz?api_name=initiate_payment_iframe',
+        data: $(this).serialize(),
+        dataType: 'json',
+        success: function (json_response) {
+          if (typeof json_response === 'string') {
+            json_response = JSON.parse(json_response);
+          }
+
+          var data = json_response['data'] || json_response;
+          var env = data['env'] || 'test';
+
+          if (json_response['status'] == 1) {
+            // Open Easebuzz payment popup
+            var easebuzzCheckout = new EasebuzzCheckout(data['key'], env);
+            var options = {
+              access_key: data['access_key'],
+              onResponse: function (response_data) {
+                var loadingEl = document.getElementById('loading1');
+                loadingEl.className = '';
+                if (response_data.status === 'success') {
+                  loadingEl.classList.add('success-block');
+                  loadingEl.innerHTML = '<h3>Success</h3><pre class="json-display"></pre>';
+                  loadingEl.querySelector('pre').textContent = JSON.stringify(response_data, null, 2);
+                } else {
+                  loadingEl.classList.add('failure-block');
+                  loadingEl.innerHTML = '<h3>Failure</h3><pre class="json-display"></pre>';
+                  loadingEl.querySelector('pre').textContent = JSON.stringify(response_data, null, 2);
+                }
+                document.getElementById('iframePaymentForm').reset();
+              },
+              theme: '#123456'
+            };
+            easebuzzCheckout.initiatePayment(options);
+          } else {
+            // Show error
+            var loadingEl = document.getElementById('loading1');
+            loadingEl.className = 'failure-block';
+            loadingEl.innerHTML = '<h3>Error</h3><pre class="json-display"></pre>';
+            loadingEl.querySelector('pre').textContent = JSON.stringify(json_response, null, 2);
+            document.getElementById('iframePaymentForm').reset();
+          }
+        },
+        error: function () {
+          alert('Request failed. Please try again.');
+        }
+      });
+    });
+
+    // Auto-fill toggle
+    document.getElementById('autoFillToggle').addEventListener('change', function() {
+      var form = document.getElementById('iframePaymentForm');
+      if (this.checked) {
+        var txnid = 'TXN' + Date.now().toString(36).toUpperCase();
+        form.txnid.value = txnid;
+        form.amount.value = '125.50';
+        form.firstname.value = 'John Doe';
+        form.email.value = 'test@example.com';
+        form.phone.value = '9876543210';
+        form.productinfo.value = 'Test Product';
+        form.surl.value = 'http://localhost:3000/response';
+        form.furl.value = 'http://localhost:3000/response';
+      } else {
+        form.reset();
+        document.getElementById('loading1').className = '';
+        document.getElementById('loading1').innerHTML = '';
+      }
+    });
+  </script>
+</body>
+</html>

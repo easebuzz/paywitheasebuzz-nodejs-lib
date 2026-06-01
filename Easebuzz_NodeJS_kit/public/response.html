@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Response - Easebuzz</title>
+  <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+  <div class="response-container">
+    <a href="/public/index.html" class="back-link">← Back</a>
+    <div id="transaction-details"></div>
+    <h2>Payment Response</h2>
+    <div id="response-block">
+      <p>Loading response...</p>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      var token = params.get('token');
+
+      if (!token) {
+        showError('No response token found.');
+        return;
+      }
+
+      fetch('/response-data?token=' + encodeURIComponent(token))
+        .then(function(res) { return res.json(); })
+        .then(function(data) { renderResponse(data); })
+        .catch(function() { showError('Failed to load response data.'); });
+
+      function renderResponse(data) {
+        // Transaction details table
+        var detailsHtml = '<div class="request-details"><h3>Transaction Details</h3><table>';
+        var fields = ['txnid', 'amount', 'firstname', 'email', 'phone', 'productinfo', 'status'];
+        var txnData = data.data || {};
+
+        fields.forEach(function(field) {
+          if (txnData[field]) {
+            detailsHtml += '<tr><td>' + escapeHtml(field) + '</td><td>' + escapeHtml(txnData[field]) + '</td></tr>';
+          }
+        });
+        detailsHtml += '</table></div>';
+        document.getElementById('transaction-details').innerHTML = detailsHtml;
+
+        // Response block
+        var blockClass = data.status === 1 ? 'success-block' : 'failure-block';
+        var heading = data.status === 1 ? 'Payment Success' : 'Payment Failed';
+        if (data.message && data.message.indexOf('Hash verification') !== -1) {
+          heading = 'Hash Verification Failed';
+        }
+        var displayJson = escapeHtml(JSON.stringify(data, null, 2));
+
+        document.getElementById('response-block').innerHTML =
+          '<div class="' + blockClass + '"><h3>' + heading + '</h3><pre class="json-display">' + displayJson + '</pre></div>';
+      }
+
+      function showError(msg) {
+        document.getElementById('response-block').innerHTML =
+          '<div class="failure-block"><h3>Error</h3><pre class="json-display">' + escapeHtml(msg) + '</pre></div>';
+      }
+
+      function escapeHtml(str) {
+        var div = document.createElement('div');
+        div.appendChild(document.createTextNode(String(str)));
+        return div.innerHTML;
+      }
+    })();
+  </script>
+</body>
+</html>

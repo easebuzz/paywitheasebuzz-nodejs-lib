@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Easy Collect - Easebuzz</title>
+  <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <a href="/public/index.html"><img src="/public/images/Easebuzz_Logo_ White_Text.svg" alt="Easebuzz"></a>
+    </div>
+    <div class="nav-right">
+      <div class="toggle-container">
+        <span>Auto Fill Data</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="autoFillToggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <a href="/public/index.html">Back</a>
+    </div>
+  </div>
+
+  <div class="main-form">
+    <h2><a href="https://docs.easebuzz.in/docs/payment-gateway/xnp0bvcy0ywmn-easy-collect" target="_blank">Easy Collect API ↗</a></h2>
+
+    <form action="/easebuzz?api_name=easy_collect" method="POST">
+      <h3>Mandatory Parameters</h3>
+      <div class="mandatory-data">
+        <div class="form-field">
+          <label>Name<sup>*</sup></label>
+          <input type="text" name="name" placeholder="John Doe" required pattern="^[a-zA-Z0-9&amp;'._() /,@-]{1,150}$" title="Only alphanumeric and &'-._()/,@ allowed. Max 150 chars.">
+        </div>
+        <div class="form-field">
+          <label>Phone<sup>*</sup></label>
+          <input type="text" name="phone" placeholder="9876543210" required pattern="^(\+\d{1,4}-?)?\d{5,20}$" title="Valid phone number. 5-20 digits, optional country code.">
+        </div>
+        <div class="form-field">
+          <label>Amount<sup>*</sup></label>
+          <input type="text" name="amount" placeholder="100.00" required>
+        </div>
+      </div>
+
+      <h3>Optional Parameters</h3>
+      <h4>Link Details</h4>
+      <div class="optional-data">
+        <div class="form-field">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="test@example.com">
+        </div>
+        <div class="form-field">
+          <label>Merchant Transaction ID</label>
+          <input type="text" name="merchant_txn" placeholder="MTXN123456" pattern="^[a-zA-Z0-9_|/\-]{0,40}$" title="Only alphanumeric, _, |, -, / allowed. Max 40 chars.">
+        </div>
+        <div class="form-field">
+          <label>Message</label>
+          <input type="text" name="message" placeholder="Payment for order">
+        </div>
+        <div class="form-field">
+          <label>Expiry Date</label>
+          <input type="text" name="expiry_date" placeholder="15-06-2025 or 15-06-2025 11:30:00 AM" pattern="^\d{2}-\d{2}-\d{4}(\s\d{2}:\d{2}:\d{2}\s(AM|PM))?$" title="Date must be in DD-MM-YYYY or DD-MM-YYYY HH:MM:SS AM/PM format.">
+        </div>
+      </div>
+
+      <h4>UDF (User Defined Fields)</h4>
+      <div class="optional-data">
+        <div class="form-field"><label>UDF1</label><input type="text" name="udf1" placeholder="User description1" pattern="^[a-zA-Z.0-9/\\,\s_#@\-=+&]{0,300}$" title="Only alphanumeric and ./, _#@-=+& allowed. Max 300 chars."></div>
+        <div class="form-field"><label>UDF2</label><input type="text" name="udf2" placeholder="User description2" pattern="^[a-zA-Z.0-9/\\,\s_#@\-=+&]{0,300}$" title="Only alphanumeric and ./, _#@-=+& allowed. Max 300 chars."></div>
+        <div class="form-field"><label>UDF3</label><input type="text" name="udf3" placeholder="User description3" pattern="^[a-zA-Z.0-9/\\,\s_#@\-=+&]{0,300}$" title="Only alphanumeric and ./, _#@-=+& allowed. Max 300 chars."></div>
+        <div class="form-field"><label>UDF4</label><input type="text" name="udf4" placeholder="User description4" pattern="^[a-zA-Z.0-9/\\,\s_#@\-=+&]{0,300}$" title="Only alphanumeric and ./, _#@-=+& allowed. Max 300 chars."></div>
+        <div class="form-field"><label>UDF5</label><input type="text" name="udf5" placeholder="User description5" pattern="^[a-zA-Z.0-9/\\,\s_#@\-=+&]{0,300}$" title="Only alphanumeric and ./, _#@-=+& allowed. Max 300 chars."></div>
+      </div>
+
+      <h4>Operation (Notification Channels)</h4>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="op_sms"> SMS</label>
+        <label><input type="checkbox" name="op_email"> Email</label>
+        <label><input type="checkbox" name="op_whatsapp"> WhatsApp</label>
+      </div>
+
+      <h4>General</h4>
+      <div class="optional-data">
+        <div class="form-field">
+          <label>Update Link</label>
+          <input type="text" name="update" placeholder="true">
+        </div>
+        <div class="form-field">
+          <label>Accept Partial Payment</label>
+          <input type="text" name="accept_partial_payment" placeholder="true">
+        </div>
+        <div class="form-field">
+          <label>Split Percentage</label>
+          <input type="text" name="split_percentage" placeholder='{"label_of_bank1": 60, "label_of_bank2": 40}'>
+        </div>
+        <div class="form-field">
+          <label>Split Payments</label>
+          <input type="text" name="split_payments" placeholder='{"label_of_bank1": 60, "label_of_bank2": 40}'>
+        </div>
+        <div class="form-field">
+          <label>Sub-Merchant ID</label>
+          <input type="text" name="sub_merchant_id" placeholder="S123ABC" pattern="^[a-zA-Z0-9\-]{0,15}$">
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">Create Payment Link</button>
+    </form>
+  </div>
+
+  <script src="/public/js/form-validation.js"></script>
+  <script>
+    document.getElementById('autoFillToggle').addEventListener('change', function() {
+      const form = document.querySelector('form');
+      if (this.checked) {
+        form.querySelector('[name="name"]').value = 'John Doe';
+        form.phone.value = '9876543210';
+        form.amount.value = '100.00';
+        form.email.value = 'test@example.com';
+        form.merchant_txn.value = 'EC' + Date.now().toString(36).toUpperCase();
+      } else {
+        form.reset();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refund Status - Easebuzz</title>
+  <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <a href="/public/index.html"><img src="/public/images/Easebuzz_Logo_ White_Text.svg" alt="Easebuzz"></a>
+    </div>
+    <div class="nav-right">
+      <div class="toggle-container">
+        <span>Auto Fill Data</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="autoFillToggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <a href="/public/index.html">Back</a>
+    </div>
+  </div>
+
+  <div class="main-form">
+    <h2><a href="https://docs.easebuzz.in/docs/payment-gateway/de78eba8de53c-refund-status-api" target="_blank">Refund Status API ↗</a></h2>
+
+    <form action="/easebuzz?api_name=refund_status" method="POST">
+      <h3>Mandatory Parameters</h3>
+      <div class="mandatory-data">
+        <div class="form-field">
+          <label>Easebuzz ID<sup>*</sup></label>
+          <input type="text" name="easebuzz_id" placeholder="S260509075FD2X" required>
+        </div>
+      </div>
+
+      <h3>Optional Parameters</h3>
+      <div class="optional-data">
+        <div class="form-field">
+          <label>Merchant Refund ID</label>
+          <input type="text" name="merchant_refund_id" placeholder="REF123456" pattern="^[a-zA-Z0-9_-]*$" title="Only alphanumeric, _ and - allowed.">
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">Check Refund Status</button>
+    </form>
+  </div>
+
+  <script src="/public/js/form-validation.js"></script>
+  <script>
+    document.getElementById('autoFillToggle').addEventListener('change', function() {
+      const form = document.querySelector('form');
+      if (this.checked) {
+        form.easebuzz_id.value = 'S260509075FD2X';
+      } else {
+        form.reset();
+      }
+    });
+  </script>
+</body>
+</html>
