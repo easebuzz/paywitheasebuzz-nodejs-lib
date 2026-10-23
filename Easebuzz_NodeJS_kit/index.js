@@ -24,12 +24,12 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", 'https://ebz-static.s3.ap-south-1.amazonaws.com', 'https://ajax.googleapis.com'],
       scriptSrcAttr: ["'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
-      imgSrc: ["'self'", 'data:'],
-      connectSrc: ["'self'"],
-      frameSrc: ["'none'"],
+      imgSrc: ["'self'", 'data:', 'https:'],
+      connectSrc: ["'self'", 'https://pay.easebuzz.in', 'https://testpay.easebuzz.in', 'https://*.easebuzz.in'],
+      frameSrc: ["'self'", 'https://pay.easebuzz.in', 'https://testpay.easebuzz.in', 'https://*.easebuzz.in'],
       objectSrc: ["'none'"],
       baseUri: ["'self'"],
       formAction: ["'self'", 'https://pay.easebuzz.in', 'https://testpay.easebuzz.in']
@@ -37,6 +37,7 @@ app.use(helmet({
   },
   crossOriginEmbedderPolicy: false
 }));
+
 
 // Rate limiting — prevent brute force and DoS attacks
 const apiLimiter = rateLimit({
