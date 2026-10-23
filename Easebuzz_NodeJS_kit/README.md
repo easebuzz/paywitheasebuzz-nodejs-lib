@@ -6,7 +6,7 @@ A sample integration kit for [Easebuzz Payment Gateway](https://easebuzz.in/) bu
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/) v14 or higher
+- [Node.js](https://nodejs.org/) v22.x or v24.x (LTS).
 - npm (comes with Node.js)
 - Easebuzz merchant account ([Sign up here](https://dashboard.easebuzz.in/))
 
